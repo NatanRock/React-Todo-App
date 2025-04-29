@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { Todo } from '@/types';
 import './App.css';
 
 import { TodoList } from '@/components/todo/TodoList';
 import { TodoForm } from '@/components/todo/TodoForm';
-import { Todo } from '@/types';
+import { PageLayout } from '@/components/layout/PageLayout';
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
@@ -31,7 +32,7 @@ function App() {
     const newTodo: Todo = {
       id: Date.now().toString(),
       title,
-      		completed: false,
+      completed: false,
       createdAt: new Date(),
     };
     setTodos([...todos, newTodo]);
@@ -44,11 +45,10 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 w-1/3">
-      <h1 className="text-2xl font-bold text-center mb-6">Todo App</h1>
+    <PageLayout>
       <TodoForm onAddTodo={handleAddTodo} />
       <TodoList todos={todos} onToggleTodo={handleToggleTodo} />
-    </div>
+    </PageLayout>
   );
 }
 
