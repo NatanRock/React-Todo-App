@@ -1,32 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Todo } from '@/types';
-import './App.css';
+import { loadTodos, saveTodos } from '@/utils/storage';
 
 import { TodoList } from '@/components/todo/TodoList';
 import { TodoForm } from '@/components/todo/TodoForm';
 import { PageLayout } from '@/components/layout/PageLayout';
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([
-    {
-      id: '1',
-      title: 'Изучить React',
-      completed: true,
-      createdAt: new Date(),
-    },
-    {
-      id: '2',
-      title: 'Изучить TypeScript',
-      completed: false,
-      createdAt: new Date(),
-    },
-    {
-      id: '3',
-      title: 'Изучить Tailwind CSS',
-      completed: false,
-      createdAt: new Date(),
-    },
-  ]);
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // Загрузка задач из localStorage при инициализации
+  useEffect(() => {
+    const savedTodos = loadTodos();
+    if (savedTodos.length > 0) {
+      setTodos(savedTodos);
+    }
+  }, []);
+
+  // Сохранение задач в localStorage при изменении
+  useEffect(() => {
+    saveTodos(todos);
+  }, [todos]);
 
   const handleAddTodo = (title: string) => {
     const newTodo: Todo = {
