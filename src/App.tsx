@@ -30,6 +30,10 @@ function App() {
     setTodos([...todos, newTodo]);
   };
 
+  const handleDeleteTodo = (id: string) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   const handleToggleTodo = (id: string) => {
     setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
@@ -39,7 +43,7 @@ function App() {
   return (
     <PageLayout>
       <TodoForm onAddTodo={handleAddTodo} />
-      <TodoList todos={todos} onToggleTodo={handleToggleTodo} />
+      <TodoList todos={todos} onToggleTodo={handleToggleTodo} onDeleteTodo={handleDeleteTodo} />
     </PageLayout>
   );
 }
