@@ -2,16 +2,15 @@ import { Todo } from '@/types';
 
 const STORAGE_KEY = 'todos';
 
+type StoredTodo = Omit<Todo, 'createdAt'> & { createdAt: string };
+
 export const saveTodos = (todos: Todo[]): void => {
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(
-      todos.map((todo) => ({
-        ...todo,
-        createdAt: todo.createdAt.toISOString(),
-      }))
-    )
-  );
+  const serializedTodos: StoredTodo[] = todos.map((todo) => ({
+    ...todo,
+    createdAt: todo.createdAt.toISOString(),
+  }));
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(serializedTodos));
 };
 
 export const loadTodos = (): Todo[] => {
@@ -19,7 +18,9 @@ export const loadTodos = (): Todo[] => {
   if (!todosJson) return [];
 
   try {
-    return JSON.parse(todosJson).map((todo: any) => ({
+    const parsed: StoredTodo[] = JSON.parse(todosJson);
+
+    return parsed.map((todo) => ({
       ...todo,
       createdAt: new Date(todo.createdAt),
     }));

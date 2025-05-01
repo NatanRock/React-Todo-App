@@ -9,7 +9,6 @@ import { PageLayout } from '@/components/layout/PageLayout';
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  // Загрузка задач из localStorage при инициализации
   useEffect(() => {
     const savedTodos = loadTodos();
     if (savedTodos.length > 0) {
@@ -17,7 +16,6 @@ function App() {
     }
   }, []);
 
-  // Сохранение задач в localStorage при изменении
   useEffect(() => {
     saveTodos(todos);
   }, [todos]);
