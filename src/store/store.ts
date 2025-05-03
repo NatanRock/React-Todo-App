@@ -1,6 +1,6 @@
-import { Todo } from './todo';
+import { Todo } from '../types/todo';
 
-export type TodoState = {
+export type TodosState = {
   todos: Todo[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
@@ -8,5 +8,5 @@ export type TodoState = {
 };
 
 export type RootState = {
-  todo: TodoState;
+  todo: TodosState;
 };
