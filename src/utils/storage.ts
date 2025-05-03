@@ -1,4 +1,4 @@
-import { Todo } from '@/types';
+import { Todo } from '@/types/todo';
 
 const STORAGE_KEY = 'todos';
 
